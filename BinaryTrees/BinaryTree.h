@@ -26,6 +26,7 @@ private:
     Node* root;
     int size;
     void InOrderTraversal(Node* curr);
+    void PreOrderTraversal(Node* curr);
 public:
     BinaryTree();
     void Insert(T newItem);
@@ -35,6 +36,7 @@ public:
     void PostOrderTraversal();
     T FindMax();
     T FindMin();
+    void Delete(T itemToDelete);
     
 };
 
@@ -87,6 +89,21 @@ void BinaryTree<T>::InOrderTraversal(Node* curr){
     InOrderTraversal(curr->right);
 }
 
+template<typename T>
+void BinaryTree<T>::PreOrderTraversal(){
+    BinaryTree<T>::PreOrderTraversal(root);
+}
+
+template<typename T>
+void BinaryTree<T>::PreOrderTraversal(Node* curr){
+    if (curr == nullptr){
+        return;
+    }
+    cout << curr->item << " ";
+    InOrderTraversal(curr->left);
+    InOrderTraversal(curr->right);
+}
+
 
 template<typename T>
 bool BinaryTree<T>::Find(T itemToFind) {
@@ -119,6 +136,64 @@ T BinaryTree<T>::FindMin(){
         curr = curr->left;
     }
     return curr->item;
+}
+
+template<typename T>
+void BinaryTree<T>::Delete(T itemToDelete){
+    size--;
+    Node* curr = root;
+    Node* prev = nullptr;
+    /*
+     First find the node we need to delete
+     while maintaining prev and curr pointers
+     */
+    while (curr != nullptr){
+        if (itemToDelete < curr->item){
+            //Item less than curr: look in left subtree
+            prev = curr;
+            curr = curr->left;
+        } else if (itemToDelete > curr->item) {
+            //Item greater than curr: look in right subtree
+            prev = curr;
+            curr = curr->right;
+        } else {
+            //We found the item
+            break;
+        }
+    }
+    
+    /**
+     Determine the type of node we're deleting:
+     -leaf
+     -node with 1 child
+     -node with 2 children
+     */
+    if (curr->left == nullptr && curr->right == nullptr){
+        //Deleting a leaf:
+        if (prev->left == curr){
+            prev->left = nullptr;
+        } else {
+            prev->right = nullptr;
+        }
+        delete curr;
+        curr = nullptr;
+    } else if (curr->left == nullptr || curr->right == nullptr){
+        //Deleting node with just one child
+        Node* temp = nullptr;
+        curr->right == nullptr ? temp = curr->left : temp = curr->right;
+        
+        if (curr == prev->right){
+            delete curr;
+            curr = nullptr;
+            prev->right = temp;
+        } else {
+            delete curr;
+            curr = nullptr;
+            prev->left = temp;
+        }
+    } else {
+        //Deleting node with 2 children
+    }
 }
 
 #endif /* BinaryTree_h */
