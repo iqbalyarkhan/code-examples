@@ -100,8 +100,8 @@ void BinaryTree<T>::PreOrderTraversal(Node* curr){
         return;
     }
     cout << curr->item << " ";
-    InOrderTraversal(curr->left);
-    InOrderTraversal(curr->right);
+    PreOrderTraversal(curr->left);
+    PreOrderTraversal(curr->right);
 }
 
 
@@ -141,26 +141,30 @@ T BinaryTree<T>::FindMin(){
 template<typename T>
 void BinaryTree<T>::Delete(T itemToDelete){
     size--;
-    Node* curr = root;
+    Node* nodeToBeDeleted = root;
     Node* prev = nullptr;
     /*
      First find the node we need to delete
      while maintaining prev and curr pointers
      */
-    while (curr != nullptr){
-        if (itemToDelete < curr->item){
+    while (nodeToBeDeleted != nullptr){
+        if (itemToDelete < nodeToBeDeleted->item){
             //Item less than curr: look in left subtree
-            prev = curr;
-            curr = curr->left;
-        } else if (itemToDelete > curr->item) {
+            prev = nodeToBeDeleted;
+            nodeToBeDeleted = nodeToBeDeleted->left;
+        } else if (itemToDelete > nodeToBeDeleted->item) {
             //Item greater than curr: look in right subtree
-            prev = curr;
-            curr = curr->right;
+            prev = nodeToBeDeleted;
+            nodeToBeDeleted = nodeToBeDeleted->right;
         } else {
             //We found the item
             break;
         }
     }
+    
+    //nodeToBeDeleted now is pointing to the node to be deleted
+    //and prev is pointing either to null or parent of
+    //nodeToBeDeleted
     
     /**
      Determine the type of node we're deleting:
@@ -168,31 +172,58 @@ void BinaryTree<T>::Delete(T itemToDelete){
      -node with 1 child
      -node with 2 children
      */
-    if (curr->left == nullptr && curr->right == nullptr){
+    if (nodeToBeDeleted->left == nullptr && nodeToBeDeleted->right == nullptr){
         //Deleting a leaf:
-        if (prev->left == curr){
+        if (prev->left == nodeToBeDeleted){
             prev->left = nullptr;
         } else {
             prev->right = nullptr;
         }
-        delete curr;
-        curr = nullptr;
-    } else if (curr->left == nullptr || curr->right == nullptr){
+        delete nodeToBeDeleted;
+        nodeToBeDeleted = nullptr;
+    } else if (nodeToBeDeleted->left == nullptr || nodeToBeDeleted->right == nullptr){
         //Deleting node with just one child
         Node* temp = nullptr;
-        curr->right == nullptr ? temp = curr->left : temp = curr->right;
+        nodeToBeDeleted->right == nullptr ? temp = nodeToBeDeleted->left : temp = nodeToBeDeleted->right;
         
-        if (curr == prev->right){
-            delete curr;
-            curr = nullptr;
+        if (nodeToBeDeleted == prev->right){
+            delete nodeToBeDeleted;
+            nodeToBeDeleted = nullptr;
             prev->right = temp;
         } else {
-            delete curr;
-            curr = nullptr;
+            delete nodeToBeDeleted;
+            nodeToBeDeleted = nullptr;
             prev->left = temp;
         }
     } else {
         //Deleting node with 2 children
+        Node* replaceWith = nodeToBeDeleted->right;
+        Node* newPrev = nodeToBeDeleted->right;
+        while (replaceWith->left != nullptr){
+            newPrev = replaceWith;
+            replaceWith = replaceWith->left;
+        }
+        
+        if (replaceWith->right != nullptr){
+            newPrev->left = replaceWith->right;
+        } else {
+            newPrev->left = nullptr;
+        }
+        replaceWith->left = nodeToBeDeleted->left;
+        replaceWith->right = nodeToBeDeleted->right;
+        if (prev != nullptr){
+            if (nodeToBeDeleted == prev->right){
+                prev->right = replaceWith;
+            } else {
+                prev->left = replaceWith;
+            }
+        } else {
+            //We're deleting root
+            root = replaceWith;
+        }
+        
+        delete nodeToBeDeleted;
+        nodeToBeDeleted = nullptr;
     }
 }
 

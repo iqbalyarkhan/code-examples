@@ -12,15 +12,21 @@
 int main(int argc, const char * argv[]) {
     BinaryTree<int> bt;
     bt.Insert(10);
+    bt.Insert(4);
+    bt.Insert(3);
+    bt.Insert(6);
+    bt.Insert(18);
     bt.Insert(13);
     bt.Insert(11);
     bt.Insert(12);
+    bt.Insert(21);
+    bt.Insert(20);
 //    bt.InOrderTraversal();
     bt.PreOrderTraversal();
     cout << endl;
     cout << "max: " << bt.FindMax() << endl;
     cout << "min: " << bt.FindMin() << endl;
-    bt.Delete(13);
+    bt.Delete(18);
     cout << "After deletion: " << endl;
     bt.PreOrderTraversal();
     
