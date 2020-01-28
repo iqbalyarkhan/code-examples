@@ -27,6 +27,8 @@ private:
     int size;
     void InOrderTraversal(Node* curr);
     void PreOrderTraversal(Node* curr);
+    void RecursiveInsert(Node*& curr, T newItem);
+    Node* GetSuccessor(Node *);
 public:
     BinaryTree();
     void Insert(T newItem);
@@ -49,29 +51,46 @@ BinaryTree<T>::BinaryTree(){
 template<typename T>
 void BinaryTree<T>::Insert(T newItem){
     size++;
-    Node* newNode = new Node;
-    newNode->item = newItem;
-    newNode->left = nullptr;
-    newNode->right = nullptr;
-    if (root == nullptr){
-        root = newNode;
-    } else {
-        Node* curr = root;
-        Node* prev = root;
-        while (curr != nullptr){
-            prev = curr;
-            if (newItem < curr->item){
-                curr = curr->left;
-            } else {
-                curr = curr->right;
-            }
-        }
-        
-        if (newItem < prev->item)
-            prev->left = newNode;
-        else
-            prev->right = newNode;
+    RecursiveInsert(root, newItem);
+//    Node* newNode = new Node;
+//    newNode->item = newItem;
+//    newNode->left = nullptr;
+//    newNode->right = nullptr;
+//    if (root == nullptr){
+//        root = newNode;
+//    } else {
+//        Node* curr = root;
+//        Node* prev = root;
+//        while (curr != nullptr){
+//            prev = curr;
+//            if (newItem < curr->item){
+//                curr = curr->left;
+//            } else {
+//                curr = curr->right;
+//            }
+//        }
+//
+//        if (newItem < prev->item)
+//            prev->left = newNode;
+//        else
+//            prev->right = newNode;
+//    }
+}
+
+template<typename T>
+void BinaryTree<T>::RecursiveInsert(Node*& curr, T newItem){
+    if (curr == nullptr){
+        Node* newNode = new Node;
+        newNode->item = newItem;
+        newNode->left = nullptr;
+        newNode->right = nullptr;
+        curr = newNode;
+        return;
     }
+    if (newItem < curr->item)
+        RecursiveInsert(curr->left, newItem);
+    if (newItem > curr->item)
+        RecursiveInsert(curr->right, newItem);
 }
 
 template<typename T>
@@ -140,91 +159,7 @@ T BinaryTree<T>::FindMin(){
 
 template<typename T>
 void BinaryTree<T>::Delete(T itemToDelete){
-    size--;
-    Node* nodeToBeDeleted = root;
-    Node* prev = nullptr;
-    /*
-     First find the node we need to delete
-     while maintaining prev and curr pointers
-     */
-    while (nodeToBeDeleted != nullptr){
-        if (itemToDelete < nodeToBeDeleted->item){
-            //Item less than curr: look in left subtree
-            prev = nodeToBeDeleted;
-            nodeToBeDeleted = nodeToBeDeleted->left;
-        } else if (itemToDelete > nodeToBeDeleted->item) {
-            //Item greater than curr: look in right subtree
-            prev = nodeToBeDeleted;
-            nodeToBeDeleted = nodeToBeDeleted->right;
-        } else {
-            //We found the item
-            break;
-        }
-    }
-    
-    //nodeToBeDeleted now is pointing to the node to be deleted
-    //and prev is pointing either to null or parent of
-    //nodeToBeDeleted
-    
-    /**
-     Determine the type of node we're deleting:
-     -leaf
-     -node with 1 child
-     -node with 2 children
-     */
-    if (nodeToBeDeleted->left == nullptr && nodeToBeDeleted->right == nullptr){
-        //Deleting a leaf:
-        if (prev->left == nodeToBeDeleted){
-            prev->left = nullptr;
-        } else {
-            prev->right = nullptr;
-        }
-        delete nodeToBeDeleted;
-        nodeToBeDeleted = nullptr;
-    } else if (nodeToBeDeleted->left == nullptr || nodeToBeDeleted->right == nullptr){
-        //Deleting node with just one child
-        Node* temp = nullptr;
-        nodeToBeDeleted->right == nullptr ? temp = nodeToBeDeleted->left : temp = nodeToBeDeleted->right;
-        
-        if (nodeToBeDeleted == prev->right){
-            delete nodeToBeDeleted;
-            nodeToBeDeleted = nullptr;
-            prev->right = temp;
-        } else {
-            delete nodeToBeDeleted;
-            nodeToBeDeleted = nullptr;
-            prev->left = temp;
-        }
-    } else {
-        //Deleting node with 2 children
-        Node* replaceWith = nodeToBeDeleted->right;
-        Node* newPrev = nodeToBeDeleted->right;
-        while (replaceWith->left != nullptr){
-            newPrev = replaceWith;
-            replaceWith = replaceWith->left;
-        }
-        
-        if (replaceWith->right != nullptr){
-            newPrev->left = replaceWith->right;
-        } else {
-            newPrev->left = nullptr;
-        }
-        replaceWith->left = nodeToBeDeleted->left;
-        replaceWith->right = nodeToBeDeleted->right;
-        if (prev != nullptr){
-            if (nodeToBeDeleted == prev->right){
-                prev->right = replaceWith;
-            } else {
-                prev->left = replaceWith;
-            }
-        } else {
-            //We're deleting root
-            root = replaceWith;
-        }
-        
-        delete nodeToBeDeleted;
-        nodeToBeDeleted = nullptr;
-    }
+
 }
 
 #endif /* BinaryTree_h */
