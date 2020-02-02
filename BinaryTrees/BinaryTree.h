@@ -30,6 +30,7 @@ private:
     void PostOrderTraversal(Node* curr);
     void RecursiveInsert(Node*& curr, T newItem);
     void DeleteWithTwoChildren(Node* curr, Node* prev, T itemToDelete);
+    void FindMin(Node*curr);
 
 public:
     BinaryTree();
@@ -211,25 +212,30 @@ void BinaryTree<T>::Delete(T itemToDelete){
 }
 
 template <typename T>
+void BinaryTree<T>::FindMin(Node *curr){
+    Node* newCurr = curr->right;
+    Node* newPrev = curr;
+    while (newCurr->left != nullptr){
+        newPrev = newCurr;
+        newCurr = newCurr->left;
+    }
+    
+    curr->item = newCurr->item;
+    if (newCurr->right != nullptr){
+        newPrev->left = newCurr->right;
+    } else {
+        newPrev->left = nullptr;
+    }
+    
+    delete newCurr;
+    newCurr = nullptr;
+}
+
+template <typename T>
 void BinaryTree<T>::DeleteWithTwoChildren(Node *curr, Node *prev, T itemToDelete){
     if (prev == nullptr){
         //deleting root
-        Node* newCurr = curr->right;
-        Node* newPrev = curr;
-        while (newCurr->left != nullptr){
-            newPrev = newCurr;
-            newCurr = newCurr->left;
-        }
-        
-        curr->item = newCurr->item;
-        if (newCurr->right != nullptr){
-            newPrev->left = newCurr->right;
-        } else {
-            newPrev->left = nullptr;
-        }
-        
-        delete newCurr;
-        newCurr = nullptr;
+        FindMin(curr);
         
     } else {
         //deleting something with 2 children that is not root
@@ -242,22 +248,7 @@ void BinaryTree<T>::DeleteWithTwoChildren(Node *curr, Node *prev, T itemToDelete
             delete curr->right;
             curr->right = nullptr;
         } else {
-            Node* newCurr = curr->right;
-            Node* newPrev = curr;
-            while (newCurr->left != nullptr){
-                newPrev = newCurr;
-                newCurr = newCurr->left;
-            }
-            
-            if (newCurr->right != nullptr){
-                newPrev->left = newCurr->right;
-            } else {
-                newPrev->left = nullptr;
-            }
-            
-            curr->item = newCurr->item;
-            delete newCurr;
-            newCurr = nullptr;
+            FindMin(curr);
         }
     }
 }
