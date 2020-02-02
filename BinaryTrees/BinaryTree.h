@@ -27,8 +27,10 @@ private:
     int size;
     void InOrderTraversal(Node* curr);
     void PreOrderTraversal(Node* curr);
+    void PostOrderTraversal(Node* curr);
     void RecursiveInsert(Node*& curr, T newItem);
-    Node* GetSuccessor(Node *);
+    void DeleteWithTwoChildren(Node* curr, Node* prev, T itemToDelete);
+
 public:
     BinaryTree();
     void Insert(T newItem);
@@ -123,6 +125,21 @@ void BinaryTree<T>::PreOrderTraversal(Node* curr){
     PreOrderTraversal(curr->right);
 }
 
+template<typename T>
+void BinaryTree<T>::PostOrderTraversal(){
+    BinaryTree<T>::PostOrderTraversal(root);
+}
+
+template<typename T>
+void BinaryTree<T>::PostOrderTraversal(Node* curr){
+    if (curr == nullptr){
+        return;
+    }
+    PostOrderTraversal(curr->left);
+    PostOrderTraversal(curr->right);
+    cout << curr->item << " ";
+}
+
 
 template<typename T>
 bool BinaryTree<T>::Find(T itemToFind) {
@@ -157,9 +174,93 @@ T BinaryTree<T>::FindMin(){
     return curr->item;
 }
 
-template<typename T>
+template <typename T>
 void BinaryTree<T>::Delete(T itemToDelete){
+    Node* curr = root;
+    Node* prev = nullptr;
+    bool leftChild = false;
+    
+    while (curr->item != itemToDelete){
+        prev = curr;
+        if (itemToDelete < curr->item){
+            curr = curr->left;
+            leftChild = true;
+        } else {
+            curr = curr->right;
+            leftChild = false;
+        }
+    }
 
+    
+    if (curr->left == nullptr && curr->right == nullptr){
+        leftChild == true ? prev->left = nullptr : prev->right = nullptr;
+        delete curr;
+        curr = nullptr;
+        
+    } else if (curr->left == nullptr){
+        leftChild == true ? prev->left = curr->right : prev->right = curr->right;
+        
+    } else if (curr->right == nullptr){
+        leftChild == true ? prev->left = curr->left : prev->right = curr->right;
+        
+    } else {
+        //Has 2 children
+        DeleteWithTwoChildren(curr, prev, itemToDelete);
+    }
+    
 }
+
+template <typename T>
+void BinaryTree<T>::DeleteWithTwoChildren(Node *curr, Node *prev, T itemToDelete){
+    if (prev == nullptr){
+        //deleting root
+        Node* newCurr = curr->right;
+        Node* newPrev = curr;
+        while (newCurr->left != nullptr){
+            newPrev = newCurr;
+            newCurr = newCurr->left;
+        }
+        
+        curr->item = newCurr->item;
+        if (newCurr->right != nullptr){
+            newPrev->left = newCurr->right;
+        } else {
+            newPrev->left = nullptr;
+        }
+        
+        delete newCurr;
+        newCurr = nullptr;
+        
+    } else {
+        //deleting something with 2 children that is not root
+        if (curr->right->left == nullptr){
+            curr->item = curr->right->item;
+            if (curr->right->right != nullptr){
+                Node* temp = curr->right->right;
+                curr->right = temp;
+            }
+            delete curr->right;
+            curr->right = nullptr;
+        } else {
+            Node* newCurr = curr->right;
+            Node* newPrev = curr;
+            while (newCurr->left != nullptr){
+                newPrev = newCurr;
+                newCurr = newCurr->left;
+            }
+            
+            if (newCurr->right != nullptr){
+                newPrev->left = newCurr->right;
+            } else {
+                newPrev->left = nullptr;
+            }
+            
+            curr->item = newCurr->item;
+            delete newCurr;
+            newCurr = nullptr;
+        }
+    }
+}
+
 
 #endif /* BinaryTree_h */
