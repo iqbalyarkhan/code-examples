@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
         int deleteNode;
         cout << "Node to delete: " << endl;
         cin >> deleteNode;
-        bt.DeleteNode(deleteNode);
+        bt.RecursiveDelete(deleteNode);
         cout << "After deletion: " << endl;
         bt.PostOrderTraversal();
         cout << endl;

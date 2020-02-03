@@ -33,6 +33,7 @@ private:
     void RemoveNodePrivate(Node*, T);//RemoveNodePrivate()
     void RemoveRootMatch();
     void RemoveMatch(Node*, Node*, bool);
+    Node* RecursiveDeletePrivate(Node*, T);
     
 public:
     BinaryTree();
@@ -44,8 +45,64 @@ public:
     T FindMax();
     T FindMin();
     void RemoveNode(T itemToDelete);
+    void RecursiveDelete(T itemToDelete);
     
 };
+
+template <typename T>
+typename BinaryTree<T>::Node* BinaryTree<T>::RecursiveDeletePrivate(Node* root, T itemToDelete){
+    if (root == nullptr){
+        return nullptr;
+    } else if (itemToDelete < root->item){
+        root->left = RecursiveDeletePrivate(root->left, itemToDelete);
+    } else if (itemToDelete > root->item){
+        root->right = RecursiveDeletePrivate(root->right, itemToDelete);
+    } else {
+        //We found the item.
+        if (root->left == nullptr && root->right == nullptr){
+            //It is a leaf node
+            delete root;
+            root = nullptr;
+            return root;
+            
+        } else if (root->left == nullptr){
+            //Node to be deleted has right children
+            Node* temp = root;
+            root = root->right;
+            delete temp;
+            temp = nullptr;
+            return root;
+            
+        } else if (root->right == nullptr){
+            //Node to be deleted has left children
+            Node* temp = root;
+            root = root->left;
+            delete temp;
+            temp = nullptr;
+            return root;
+        } else{
+            //Node to be deleted has 2 children - left and right
+            //Find min in right subtree
+            Node* temp = root->right;
+            
+            while (temp->left != nullptr){
+                temp = temp->left;
+            }
+            
+            root->item = temp->item;
+            root->right = RecursiveDeletePrivate(root->right, temp->item);
+            
+        }
+    }
+    return root;
+}
+
+template <typename T>
+void BinaryTree<T>::RecursiveDelete(T itemToDelete){
+    //Need to capture returned root because we might be
+    //deleting the actual root during the delete operation
+    root = RecursiveDeletePrivate(root, itemToDelete);
+}
 
 template <typename T>
 void BinaryTree<T>::RemoveMatch(Node* prev, Node* curr, bool left){
