@@ -10,18 +10,15 @@
 #include "BinaryTree.h"
 
 int main(int argc, const char * argv[]) {
+    
     BinaryTree<int> bt;
 //    bt.Insert(10);
 //    bt.Insert(4);
 //    bt.Insert(11);
 //    bt.Delete(10);
-            bt.Insert(3);
-            bt.Insert(8);
-            bt.Insert(20);
-            bt.Insert(15);
-            bt.Insert(17);
-            bt.Insert(25);
-            bt.Insert(23);
+    bt.Insert(20);
+    bt.Insert(30);
+    bt.Insert(40);
     bt.PostOrderTraversal();
     cout << endl;
     //    cout << endl;
