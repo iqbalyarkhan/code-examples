@@ -17,8 +17,16 @@ int main(int argc, const char * argv[]) {
 //    bt.Insert(11);
 //    bt.Delete(10);
     bt.Insert(20);
+    bt.Insert(10);
+    bt.Insert(5);
+    bt.Insert(15);
+    bt.Insert(12);
     bt.Insert(30);
     bt.Insert(40);
+    bt.Insert(25);
+    bt.Insert(50);
+    bt.Insert(38);
+    cout << "Tree initially: " << endl;
     bt.PostOrderTraversal();
     cout << endl;
     //    cout << endl;
@@ -31,7 +39,7 @@ int main(int argc, const char * argv[]) {
         int deleteNode;
         cout << "Node to delete: " << endl;
         cin >> deleteNode;
-        bt.Delete(deleteNode);
+        bt.RemoveNode(deleteNode);
         cout << "After deletion: " << endl;
         bt.PostOrderTraversal();
         cout << endl;
