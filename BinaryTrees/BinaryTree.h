@@ -29,9 +29,9 @@ private:
     void PreOrderTraversal(Node* curr);
     void PostOrderTraversal(Node* curr);
     void RecursiveInsert(Node*& curr, T newItem);
-    void DeleteWithTwoChildren(Node* curr, Node* prev, T itemToDelete);
     void FindMin(Node*curr);
-
+    Node* deleteNode(Node*, T);
+    
 public:
     BinaryTree();
     void Insert(T newItem);
@@ -46,6 +46,43 @@ public:
 };
 
 template<typename T>
+typename BinaryTree<T>::Node* BinaryTree<T>::deleteNode(Node* root, T key) {
+    /**
+     credits for this elegant solution: https://leetcode.com/problems/delete-node-in-a-bst/discuss/93330/Recursion-and-iterative-solution
+     https://www.youtube.com/watch?v=gcULXE7ViZw&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=36
+     */
+      if(root == nullptr)
+          return nullptr;
+      if(root->item < key)
+          root->right = deleteNode(root->right, key);
+    
+      else if (root->item > key)
+          root->left = deleteNode(root->left,key);
+    
+      else {
+          if(root->left == nullptr)
+              return root->right;
+          if (root->right == nullptr)
+              return root->left;
+          
+          //Finding minimum from the right sub-tree
+          Node* temp = root->right;
+          while(temp->left)
+              temp = temp->left;
+          //Changing value for curr to the minimum value found
+          root->item = temp->item;
+          //Now delete that minimum value from right subtree
+          root->right = deleteNode(root->right, root->item);
+      }
+      return root;
+  }
+
+template<typename T>
+void BinaryTree<T>::Delete(T itemToDelete){
+    root = deleteNode(root, itemToDelete);
+}
+
+template<typename T>
 BinaryTree<T>::BinaryTree(){
     root = nullptr;
     size = 0;
@@ -55,29 +92,29 @@ template<typename T>
 void BinaryTree<T>::Insert(T newItem){
     size++;
     RecursiveInsert(root, newItem);
-//    Node* newNode = new Node;
-//    newNode->item = newItem;
-//    newNode->left = nullptr;
-//    newNode->right = nullptr;
-//    if (root == nullptr){
-//        root = newNode;
-//    } else {
-//        Node* curr = root;
-//        Node* prev = root;
-//        while (curr != nullptr){
-//            prev = curr;
-//            if (newItem < curr->item){
-//                curr = curr->left;
-//            } else {
-//                curr = curr->right;
-//            }
-//        }
-//
-//        if (newItem < prev->item)
-//            prev->left = newNode;
-//        else
-//            prev->right = newNode;
-//    }
+    //    Node* newNode = new Node;
+    //    newNode->item = newItem;
+    //    newNode->left = nullptr;
+    //    newNode->right = nullptr;
+    //    if (root == nullptr){
+    //        root = newNode;
+    //    } else {
+    //        Node* curr = root;
+    //        Node* prev = root;
+    //        while (curr != nullptr){
+    //            prev = curr;
+    //            if (newItem < curr->item){
+    //                curr = curr->left;
+    //            } else {
+    //                curr = curr->right;
+    //            }
+    //        }
+    //
+    //        if (newItem < prev->item)
+    //            prev->left = newNode;
+    //        else
+    //            prev->right = newNode;
+    //    }
 }
 
 template<typename T>
@@ -176,42 +213,6 @@ T BinaryTree<T>::FindMin(){
 }
 
 template <typename T>
-void BinaryTree<T>::Delete(T itemToDelete){
-    Node* curr = root;
-    Node* prev = nullptr;
-    bool leftChild = false;
-    
-    while (curr->item != itemToDelete){
-        prev = curr;
-        if (itemToDelete < curr->item){
-            curr = curr->left;
-            leftChild = true;
-        } else {
-            curr = curr->right;
-            leftChild = false;
-        }
-    }
-
-    
-    if (curr->left == nullptr && curr->right == nullptr){
-        leftChild == true ? prev->left = nullptr : prev->right = nullptr;
-        delete curr;
-        curr = nullptr;
-        
-    } else if (curr->left == nullptr){
-        leftChild == true ? prev->left = curr->right : prev->right = curr->right;
-        
-    } else if (curr->right == nullptr){
-        leftChild == true ? prev->left = curr->left : prev->right = curr->right;
-        
-    } else {
-        //Has 2 children
-        DeleteWithTwoChildren(curr, prev, itemToDelete);
-    }
-    
-}
-
-template <typename T>
 void BinaryTree<T>::FindMin(Node *curr){
     Node* newCurr = curr->right;
     Node* newPrev = curr;
@@ -230,28 +231,5 @@ void BinaryTree<T>::FindMin(Node *curr){
     delete newCurr;
     newCurr = nullptr;
 }
-
-template <typename T>
-void BinaryTree<T>::DeleteWithTwoChildren(Node *curr, Node *prev, T itemToDelete){
-    if (prev == nullptr){
-        //deleting root
-        FindMin(curr);
-        
-    } else {
-        //deleting something with 2 children that is not root
-        if (curr->right->left == nullptr){
-            curr->item = curr->right->item;
-            if (curr->right->right != nullptr){
-                Node* temp = curr->right->right;
-                curr->right = temp;
-            }
-            delete curr->right;
-            curr->right = nullptr;
-        } else {
-            FindMin(curr);
-        }
-    }
-}
-
 
 #endif /* BinaryTree_h */
