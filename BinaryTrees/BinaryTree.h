@@ -28,12 +28,14 @@ private:
     void InOrderTraversal(Node* curr);
     void PreOrderTraversal(Node* curr);
     void PostOrderTraversal(Node* curr);
+    void PostOrderRemoval(Node* curr);
     void RecursiveInsert(Node*& curr, T newItem);
     void FindMin(Node*curr);
     Node* RecursiveDeletePrivate(Node*, T);
     
 public:
     BinaryTree();
+    ~BinaryTree();
     void Insert(T newItem);
     bool Find(T itemToFind);
     void InOrderTraversal();
@@ -45,6 +47,25 @@ public:
     void RecursiveDelete(T itemToDelete);
     
 };
+
+template <typename T>
+BinaryTree<T>::~BinaryTree(){
+    PostOrderRemoval(root);
+}
+
+template <typename T>
+void BinaryTree<T>::PostOrderRemoval(Node *curr){
+    if (curr == nullptr){
+        return;
+    }
+    
+    PostOrderRemoval(curr->left);
+    PostOrderRemoval(curr->right);
+    cout << "deleting: " << curr->item << " " << endl;
+    delete curr;
+    curr = nullptr;
+}
+
 
 template <typename T>
 typename BinaryTree<T>::Node* BinaryTree<T>::RecursiveDeletePrivate(Node* root, T itemToDelete){

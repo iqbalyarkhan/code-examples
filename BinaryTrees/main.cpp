@@ -29,21 +29,25 @@ int main(int argc, const char * argv[]) {
     cout << "Tree initially: " << endl;
     bt.PostOrderTraversal();
     cout << endl;
+    bt.RecursiveDelete(38);
+    bt.PostOrderTraversal();
+    cout << endl;
+    
     //    cout << endl;
     //    cout << "After deleting 4: " << endl;
     //    bt.Delete(4);
     //        cout << endl;
     //        cout << "max: " << bt.FindMax() << endl;
     //        cout << "min: " << bt.FindMin() << endl;
-    while (true){
-        int deleteNode;
-        cout << "Node to delete: " << endl;
-        cin >> deleteNode;
-        bt.RecursiveDelete(deleteNode);
-        cout << "After deletion: " << endl;
-        bt.PostOrderTraversal();
-        cout << endl;
-    }
+//    while (true){
+//        int deleteNode;
+//        cout << "Node to delete: " << endl;
+//        cin >> deleteNode;
+//        bt.RecursiveDelete(deleteNode);
+//        cout << "After deletion: " << endl;
+//        bt.PostOrderTraversal();
+//        cout << endl;
+//    }
     
     
     //    bt.PostOrderTraversal();
