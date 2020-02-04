@@ -43,7 +43,6 @@ public:
     void PostOrderTraversal();
     T FindMax();
     T FindMin();
-    void RemoveNode(T itemToDelete);
     void RecursiveDelete(T itemToDelete);
     
 };
@@ -120,11 +119,7 @@ void BinaryTree<T>::RecursiveDelete(T itemToDelete){
     //Need to capture returned root because we might be
     //deleting the actual root during the delete operation
     root = RecursiveDeletePrivate(root, itemToDelete);
-}
-
-template<typename T>
-void BinaryTree<T>::RemoveNode(T itemToDelete){
-    RemoveNodePrivate(root, itemToDelete);
+    size--;
 }
 
 template<typename T>
