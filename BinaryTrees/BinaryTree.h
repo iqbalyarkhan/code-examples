@@ -30,9 +30,6 @@ private:
     void PostOrderTraversal(Node* curr);
     void RecursiveInsert(Node*& curr, T newItem);
     void FindMin(Node*curr);
-    void RemoveNodePrivate(Node*, T);//RemoveNodePrivate()
-    void RemoveRootMatch();
-    void RemoveMatch(Node*, Node*, bool);
     Node* RecursiveDeletePrivate(Node*, T);
     
 public:
@@ -102,105 +99,6 @@ void BinaryTree<T>::RecursiveDelete(T itemToDelete){
     //Need to capture returned root because we might be
     //deleting the actual root during the delete operation
     root = RecursiveDeletePrivate(root, itemToDelete);
-}
-
-template <typename T>
-void BinaryTree<T>::RemoveMatch(Node* prev, Node* curr, bool left){
-    //curr is node to be deleted
-    //prev is parent of curr
-    //left is to tell relationship b/w prev and curr
-    if (curr->left == nullptr && curr->right == nullptr){
-        if (left){
-            delete prev->left;
-            prev->left = nullptr;
-        } else {
-            delete prev->right;
-            prev->right = nullptr;
-        }
-    } else if (curr->left != nullptr && curr->right == nullptr){
-        if (left){
-            prev->left = curr->left;
-        } else {
-            prev->right = curr->left;
-        }
-        delete curr;
-        curr = nullptr;
-    } else if (curr->left == nullptr && curr->right != nullptr){
-        if (left){
-            prev->left = curr->right;
-        } else {
-            prev->right = curr->right;
-        }
-        delete curr;
-        curr = nullptr;
-    } else {
-        Node* temp = curr->right;
-        while (temp->left != nullptr){
-            temp = temp->left;
-        }
-        
-        curr->item = temp->item;
-        RemoveNodePrivate(curr->right, curr->item);
-        
-    }
-}
-
-template<typename T>
-void BinaryTree<T>::RemoveRootMatch(){
-    if (root != nullptr){
-        Node* temp = root;
-        //If root has no children
-        if (temp->left == nullptr && temp->right == nullptr){
-            delete root;
-            root = nullptr;
-            temp = nullptr;
-            return;
-        } else if (temp->left != nullptr && temp->right == nullptr ){
-            //Root has only left children
-            temp = temp->left;
-            delete root;
-            root = temp;
-        } else if (temp->left == nullptr && temp->right != nullptr) {
-            //Root has only right children
-            temp = temp->right;
-            delete root;
-            root = temp;
-        } else {
-            //Root has 2 children
-            temp = temp->right;
-            while (temp->left != nullptr){
-                temp = temp->left;
-            }
-            RemoveNodePrivate(root, temp->item);
-            root->item = temp->item;
-        }
-    } else {
-        cout << "Tree is empty" << endl;
-    }
-}
-
-template<typename T>
-void BinaryTree<T>::RemoveNodePrivate(Node* curr, T itemToDelete){
-    if (curr->item == itemToDelete){
-        //We've found the item in root.
-        RemoveRootMatch();
-    } else {
-        //Item not in root
-        if (itemToDelete < curr->item && curr->left != nullptr){
-            //Look in left subtree
-            //RemoveNode takes in curr, the child of curr and bool to tell if left child is being passed
-            curr->left->item == itemToDelete ? RemoveMatch(curr,curr->left,true) : RemoveNodePrivate(curr->left, itemToDelete);
-            
-        } else if (itemToDelete > curr->item && curr->right != nullptr){
-            //Look in right subtree
-            curr->right->item == itemToDelete ? RemoveMatch(curr, curr->right, false) : RemoveNodePrivate(curr->right, itemToDelete);
-            
-        } else {
-            //Key not present
-            cout << "Key: " << itemToDelete << " not present in tree" << endl;
-        }
-        
-    }
 }
 
 template<typename T>
