@@ -14,5 +14,11 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     Heap<int> h;
+    h.Insert(40);
+    h.Insert(30);
+    h.Insert(20);
+    h.Insert(10);
+    h.Insert(90);
+    h.Insert(25);
     return 0;
 }
