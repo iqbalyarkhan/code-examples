@@ -20,11 +20,77 @@ class Heap{
 private:
     vector<T> heapArr;
     void trickleUp(T item);
+    void trickleDown(T item);
 public:
     void Insert(T item);
+    T GetMax();
     void Print();
     Heap();
 };
+
+template <typename T>
+void Heap<T>::trickleDown(T item){
+    //Trickle down will always begin from root,
+    //so we'll always assume that the index is 0
+    //for the item to be trickled down.
+    int currIndex = 0;
+    int arraySize = int(heapArr.size()) - 1;
+    while (true){
+        T leftChildIndex = (currIndex * 2) + 1;
+        T rightChildIndex = (currIndex * 2) + 2;
+//        bool swapWithLeft = false;
+//        bool swapWithRight = false;
+        if (leftChildIndex <= arraySize && rightChildIndex <= arraySize){
+            //We have both, a left and a right child
+            if (heapArr[leftChildIndex] > heapArr[currIndex] && heapArr[leftChildIndex] > heapArr[rightChildIndex]){
+                //Left child is greater than curr AND is also greater than right child
+                //Swap curr with left child
+                T temp = heapArr[leftChildIndex];
+                heapArr[leftChildIndex] = heapArr[currIndex];
+                heapArr[currIndex] = temp;
+                currIndex = leftChildIndex;
+            } else if (heapArr[rightChildIndex] > heapArr[currIndex] && heapArr[rightChildIndex] > heapArr[leftChildIndex]){
+                //Right child is greater than curr AND is also greater than left child
+                //Swap curr with right child
+                T temp = heapArr[rightChildIndex];
+                heapArr[rightChildIndex] = heapArr[currIndex];
+                heapArr[currIndex] = temp;
+                currIndex = rightChildIndex;
+            }
+        } else if (leftChildIndex <= arraySize && heapArr[leftChildIndex] > heapArr[currIndex]){
+            //Only left child exists and this left child
+            //is greater than the element we're swapping
+            T temp = heapArr[leftChildIndex];
+            heapArr[leftChildIndex] = heapArr[currIndex];
+            heapArr[currIndex] = temp;
+            currIndex = leftChildIndex;
+        } else if (rightChildIndex <= arraySize && heapArr[rightChildIndex] > heapArr[currIndex]){
+            //Only right child exists and this right child
+            //is greater than the element we're swapping
+            T temp = heapArr[rightChildIndex];
+            heapArr[rightChildIndex] = heapArr[currIndex];
+            heapArr[currIndex] = temp;
+            currIndex = rightChildIndex;
+        } else {
+            //We've found the correct spot,
+            //we can exit
+            return;
+        }
+        
+    }
+    
+}
+
+template <typename T>
+T Heap<T>::GetMax(){
+    T max = heapArr[0];
+    int replacement = int(heapArr.size() - 1);
+    heapArr[0] = heapArr[replacement];
+    heapArr.erase(heapArr.end() - 1);
+    if (int(heapArr.size()) != 1)
+        trickleDown(heapArr[0]);
+    return max;
+}
 
 template <typename T>
 void Heap<T>::trickleUp(T item){
