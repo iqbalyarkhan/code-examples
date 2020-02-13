@@ -20,5 +20,15 @@ int main(int argc, const char * argv[]) {
     h.Insert(10);
     h.Insert(90);
     h.Insert(25);
+    while (true){
+        cout << "Get max? " << endl;
+        char ch;
+        cin >> ch;
+        if (ch == 'n')
+            break;
+        cout << "Max is: " <<h.GetMax() << endl;
+        cout << "New arr after max: " << endl;
+        h.Print();
+    }
     return 0;
 }

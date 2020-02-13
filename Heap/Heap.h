@@ -29,6 +29,13 @@ public:
 };
 
 template <typename T>
+void Heap<T>::Print(){
+    for (auto it : heapArr)
+        cout << it << " ";
+    cout << endl;
+}
+
+template <typename T>
 void Heap<T>::trickleDown(T item){
     //Trickle down will always begin from root,
     //so we'll always assume that the index is 0
@@ -38,8 +45,6 @@ void Heap<T>::trickleDown(T item){
     while (true){
         T leftChildIndex = (currIndex * 2) + 1;
         T rightChildIndex = (currIndex * 2) + 2;
-//        bool swapWithLeft = false;
-//        bool swapWithRight = false;
         if (leftChildIndex <= arraySize && rightChildIndex <= arraySize){
             //We have both, a left and a right child
             if (heapArr[leftChildIndex] > heapArr[currIndex] && heapArr[leftChildIndex] > heapArr[rightChildIndex]){
