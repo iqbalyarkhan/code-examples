@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     names.insert("James");
     names.insert("Bond");
     
-    auto itr = names.find("Subul");
+    auto itr = names.find("Bond");
     if (itr != names.end()){
         cout << "Found it! " << *itr << endl;
     }
