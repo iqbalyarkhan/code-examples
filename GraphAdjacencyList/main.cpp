@@ -14,12 +14,29 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    AdjList l;
-    l.AddEdge(1,4);
-    l.AddEdge(4,2);
-    l.AddEdge(5,4);
-    l.AddEdge(5,2);
-    l.AddEdge(5,3);
+    AdjList l(4);
+    l.AddEdge(0, 1);
+    l.AddEdge(0, 2);
+    l.AddEdge(0, 3);
+    l.AddEdge(1, 2);
+    l.AddEdge(2, 4);
+    
+//    AdjList l(8);
+//    l.AddEdge(0,1);
+//    l.AddEdge(0,2);
+//    l.AddEdge(0,3);
+//    l.AddEdge(0,4);
+//    l.AddEdge(1,2);
+//    l.AddEdge(1,3);
+//    l.AddEdge(1,5);
+//    l.AddEdge(2,4);
+//    l.AddEdge(2,5);
+//    l.AddEdge(4,6);
+//    l.AddEdge(4,7);
+//    l.AddEdge(6,7);
     l.Print();
+    cout << endl;
+    l.MST();
+//    l.DFS();
     return 0;
 }

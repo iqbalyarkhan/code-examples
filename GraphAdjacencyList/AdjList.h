@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -29,6 +31,8 @@ public:
     AdjList(int);
     void AddEdge(int,int);
     void Print();
+    void DFS();
+    void MST();
 };
 
 AdjList::AdjList(int vecSize) : vectorSize(vecSize + 1){
@@ -42,7 +46,7 @@ AdjList::AdjList(){
 }
 
 void AdjList::Print(){
-    for (int i = 1; i < 6; i++){
+    for (int i = 0; i < vectorSize; i++){
         cout << i;
         for (auto j : adjList[i]){
             cout << " -> ";
@@ -56,6 +60,57 @@ void AdjList::Print(){
 void AdjList::AddEdge(int i, int j){
     adjList[i].push_back(j);
     adjList[j].push_back(i);
+}
+
+void AdjList::MST(){
+    //Need an array to keep track of visited
+    //nodes. All values will be initialized to 0
+    vector<bool> visited(vectorSize);
+    stack<int> elemStack;
+    int curr = 0;
+    elemStack.push(curr);
+    while (elemStack.size() != 0){
+        if (!visited[curr]){
+            cout << curr << " ";
+            visited[curr] = true;
+        }
+        
+        for (int j = 0; j < adjList[curr].size(); j++){
+            int neighbor = adjList[curr][j];
+            if (!visited[neighbor]){
+                elemStack.push(neighbor);
+            }
+        }
+        
+        curr = elemStack.top();
+        elemStack.pop();
+    }
+}
+
+void AdjList::DFS(){
+    //Need an array to keep track of visited
+    //nodes. All values will be initialized to 0
+    vector<bool> visited(vectorSize);
+//    stack<int> elemStack;
+    queue<int> elemStack;
+    int curr = 0;
+    elemStack.push(curr);
+    while (elemStack.size() != 0){
+        if (!visited[curr]){
+            cout << curr << " ";
+            visited[curr] = true;
+        }
+        
+        for (int j = 0; j < adjList[curr].size(); j++){
+            int neighbor = adjList[curr][j];
+            if (!visited[neighbor]){
+                elemStack.push(neighbor);
+            }
+        }
+        
+        curr = elemStack.front();
+        elemStack.pop();
+    }
 }
 
 
