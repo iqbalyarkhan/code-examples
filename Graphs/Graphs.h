@@ -15,25 +15,21 @@
 
 using namespace std;
 
-class Graph{
+class AdjMatrix{
 private:
-    class Vertex{
-    public:
-        char item;
-        Vertex* next;
-    };
-    bool** matrix;
+    vector<vector<bool>> matrix;
     int vertices = 5;
-    
+    void InitAdjMatrix();
     
 public:
-    Graph();
+    AdjMatrix();
+    AdjMatrix(int);
     void AddEdge(int,int);
     void Print();
     
 };
 
-void Graph::Print(){
+void AdjMatrix::Print(){
     for (int row = 0; row < vertices; row++){
         for (int col = 0; col < vertices; col++){
             cout << matrix[row][col] << " ";
@@ -43,18 +39,24 @@ void Graph::Print(){
     cout << endl;
 }
 
-Graph::Graph(){
-    
-    matrix = new bool*[vertices];
+AdjMatrix::AdjMatrix(int numVertices) : vertices(numVertices){
+    InitAdjMatrix();
+}
+
+AdjMatrix::AdjMatrix(){
+    InitAdjMatrix();
+}
+
+
+
+void AdjMatrix::InitAdjMatrix(){
+    matrix.resize(vertices);
     for (int row = 0; row < vertices; row++){
-        matrix[row] = new bool[vertices];
-        for (int col = 0; col < vertices; col++){
-            matrix[row][col] = false;
-        }
+        matrix[row].resize(vertices);
     }
 }
 
-void Graph::AddEdge(int i, int j){
+void AdjMatrix::AddEdge(int i, int j){
     matrix[i][j] = true;
     matrix[j][i] = true;
 }

@@ -16,11 +16,13 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     
-    Graph g;
+    AdjMatrix g(6);
     g.Print();
-    g.AddEdge(2, 3);
     g.AddEdge(1, 4);
-    g.AddEdge(0, 1);
+    g.AddEdge(2, 4);
+    g.AddEdge(2, 5);
+    g.AddEdge(3, 5);
+    g.AddEdge(4, 5);
     g.Print();
     
     return 0;
