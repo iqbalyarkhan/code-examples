@@ -31,9 +31,38 @@ public:
     AdjList(int);
     void AddEdge(int,int);
     void Print();
+    void AddVertex(int);
+    void DeleteVertex(int);
     void DFS();
     void MST();
 };
+
+//Function that takes in the additional
+//number of vertices that you want
+void AdjList::AddVertex(int num){
+    vectorSize+= num;
+    adjList.resize(vectorSize);
+}
+
+//Function to delete vertex passed
+void AdjList::DeleteVertex(int v){
+    if (v > vectorSize)
+        return;
+    //Empties vertex v's adjacency list
+    adjList[v].clear();
+    //Looks through other adjacency lists and removes
+    //v from those lists.
+    for (int i = 0; i < vectorSize; i++){
+        auto itr = adjList[i].begin();
+        while (itr != adjList[i].end()){
+            if (*itr == v){
+                itr = adjList[i].erase(itr);
+            } else {
+                itr++;
+            }
+        }
+    }
+}
 
 AdjList::AdjList(int vecSize) : vectorSize(vecSize + 1){
     cout << "Number of vertices was passed as: " << vectorSize << endl;

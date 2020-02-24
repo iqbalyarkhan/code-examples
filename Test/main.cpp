@@ -14,16 +14,55 @@
 #include "Test.h"
 
 int main(int argc, const char * argv[]) {
-    int* arr;
-    arr = new int[5];
-    arr[0] = 1;
-    arr[1] = 2;
-    arr[2] = 3;
-    arr[3] = 4;
-    arr[4] = 5;
-    cout << "test" << endl;
-    for (int i = 0; i < 5; i++)
-        cout << arr[i] << " ";
+    vector<int>* arr[3];
+    arr[0] = new vector<int>;
+    arr[1] = new vector<int>;
+    arr[2] = new vector<int>;
+    cout << "hello world!" << endl;
+    cout << "Yo yo honey singh!" << endl;
+    arr[0]->push_back(8);
+    arr[0]->push_back(8);
+    arr[0]->push_back(8);
+    arr[1]->push_back(9);
+    arr[1]->push_back(9);
+    arr[1]->push_back(9);
+    arr[2]->push_back(10);
+    arr[2]->push_back(10);
+    arr[2]->push_back(10);
+    
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            cout << arr[i]->at(j) << " ";
+        }
+        cout << endl;
+    }
+    
+    delete arr[1];
+    arr[1] = nullptr;
+    cout << "Bleh!" << endl;
+    
+    for (int i = 0; i < 3; i++){
+        if (arr[i] != nullptr){
+            for (int j = 0; j < arr[i]->size(); j++){
+                cout << arr[i]->at(j) << " ";
+            }
+            cout << endl;
+//            i++;
+        } else {
+//            i++;
+        }
+    }
+    
+//    int* arr;
+//    arr = new int[5];
+//    arr[0] = 1;
+//    arr[1] = 2;
+//    arr[2] = 3;
+//    arr[3] = 4;
+//    arr[4] = 5;
+//    cout << "test" << endl;
+//    for (int i = 0; i < 5; i++)
+//        cout << arr[i] << " ";
     
 //    cout << 1/2 << endl;
     

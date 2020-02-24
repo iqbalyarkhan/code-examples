@@ -35,8 +35,14 @@ int main(int argc, const char * argv[]) {
 //    l.AddEdge(4,7);
 //    l.AddEdge(6,7);
     l.Print();
-    cout << endl;
-    l.MST();
+//    l.AddVertex(3);
+//    cout << "After adding 3 more vertices: " << endl;
+//    l.Print();
+    l.DeleteVertex(2);
+    cout << "After deleting 2" << endl;
+    l.Print();
+//    cout << endl;
+//    l.MST();
 //    l.DFS();
     return 0;
 }
