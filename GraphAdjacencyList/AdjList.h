@@ -23,8 +23,9 @@ private:
     //since vectors start at 0 and
     //we want 1-5. So 0 will remain
     //empty
-    int vectorSize = 6;
+    int vectorSize;
     vector<vector<int>> adjList;
+    vector<bool> visited;
     
 public:
     AdjList();
@@ -34,8 +35,21 @@ public:
     void AddVertex(int);
     void DeleteVertex(int);
     void DFS();
+    void RecursiveDFS(int v);
     void MST();
 };
+
+
+void AdjList::RecursiveDFS(int v){
+    visited[v] = true;
+    cout << v << " ";
+    for (int i = 0; i < adjList[v].size(); i++){
+        int curr = adjList[v][i];
+        if (!visited[curr]){
+            RecursiveDFS(curr);
+        }
+    }
+}
 
 //Function that takes in the additional
 //number of vertices that you want
@@ -67,11 +81,13 @@ void AdjList::DeleteVertex(int v){
 AdjList::AdjList(int vecSize) : vectorSize(vecSize + 1){
     cout << "Number of vertices was passed as: " << vectorSize << endl;
     adjList.resize(vectorSize);
+    visited.resize(vectorSize);
 }
 AdjList::AdjList(){
     cout << "Number of vertices defaults to 5..." << endl;
     vectorSize = 6;
     adjList.resize(vectorSize);
+    visited.resize(vectorSize);
 }
 
 void AdjList::Print(){
