@@ -40,7 +40,40 @@ public:
     void RecursiveDFS(int v);
     void MST();
     void PrintEdgeTo();
+    void FindPath(int v, int w);
 };
+
+void AdjList::FindPath(int v, int w){
+    /**
+     Begin at the w vertex: 5 (push 5 on the stack)
+     Check edgeTo[w] = edgeTo[5] = 3. (push 3 on the stack)
+     Go to edgeTo[3] = 2 (push 2 on the stack)
+     Go to edgeTo[2] = 0 (push 0 on the stack)
+     We're now at v vertex: 0
+     */
+    stack<int> s;
+    int end = w;
+    while (true){
+        s.push(end);
+        if (end == v){
+            break;
+        }
+        end = edgeTo[end];
+    }
+    
+    cout << "Path from " << v << " to " << w <<": "<<endl;
+    while (!s.empty()) {
+        int curr = s.top();
+        cout << curr << " ";
+         s.pop();
+    }
+//    for (int i = 0; i < s.size(); i++){
+//        cout << s.top() << " ";
+//        s.pop();
+//    }
+    
+    cout << endl;
+}
 
 
 void AdjList::RecursiveDFS(int v){

@@ -27,8 +27,9 @@ int main(int argc, const char * argv[]) {
     cout << "Recursive DFS" << endl;
     l.RecursiveDFS(0);
     cout << endl;
-    cout <<"Printing edge to: " << endl;
-    l.PrintEdgeTo();
+    l.FindPath(0, 5);
+//    cout <<"Printing edge to: " << endl;
+//    l.PrintEdgeTo();
 //    cout << "Find path: " << endl;
 //    l.FindPath(2, 5);
     cout << endl;
