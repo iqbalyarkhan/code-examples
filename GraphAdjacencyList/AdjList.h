@@ -26,6 +26,8 @@ private:
     int vectorSize;
     vector<vector<int>> adjList;
     vector<bool> visited;
+    vector<int> edgeTo;
+    void initializeStructures();
     
 public:
     AdjList();
@@ -37,6 +39,7 @@ public:
     void DFS();
     void RecursiveDFS(int v);
     void MST();
+    void PrintEdgeTo();
 };
 
 
@@ -46,10 +49,18 @@ void AdjList::RecursiveDFS(int v){
     for (int i = 0; i < adjList[v].size(); i++){
         int curr = adjList[v][i];
         if (!visited[curr]){
+            edgeTo[curr] = v;
             RecursiveDFS(curr);
         }
     }
 }
+
+void AdjList::PrintEdgeTo(){
+    for (int i = 0; i < edgeTo.size(); i++){
+        cout << "edgeTo[" << i << "]" << " --> " << edgeTo[i] << endl;
+    }
+}
+
 
 //Function that takes in the additional
 //number of vertices that you want
@@ -78,16 +89,22 @@ void AdjList::DeleteVertex(int v){
     }
 }
 
-AdjList::AdjList(int vecSize) : vectorSize(vecSize + 1){
+AdjList::AdjList(int vecSize) : vectorSize(vecSize){
     cout << "Number of vertices was passed as: " << vectorSize << endl;
-    adjList.resize(vectorSize);
-    visited.resize(vectorSize);
+    initializeStructures();
 }
 AdjList::AdjList(){
     cout << "Number of vertices defaults to 5..." << endl;
-    vectorSize = 6;
+    vectorSize = 5;
+    initializeStructures();
+}
+
+//Helper function to set sizes for structures
+//used for various operations
+void AdjList::initializeStructures(){
     adjList.resize(vectorSize);
     visited.resize(vectorSize);
+    edgeTo.resize(vectorSize);
 }
 
 void AdjList::Print(){
