@@ -37,6 +37,7 @@ public:
     void AddVertex(int);
     void DeleteVertex(int);
     void DFS();
+    void BFS(int);
     void RecursiveDFS(int v);
     void MST();
     void PrintEdgeTo();
@@ -67,11 +68,28 @@ void AdjList::FindPath(int v, int w){
         cout << curr << " ";
          s.pop();
     }
-//    for (int i = 0; i < s.size(); i++){
-//        cout << s.top() << " ";
-//        s.pop();
-//    }
     
+    cout << endl;
+}
+
+void AdjList::BFS(int v){
+    vector<int> marked(vectorSize);
+    queue<int> q;
+    marked[v] = true;
+    q.push(v);
+    while (!q.empty()){
+        int curr = q.front();
+        cout << curr << " ";
+        q.pop();
+        for (int i = 0; i < adjList[curr].size(); i++){
+            int neighbor = adjList[curr][i];
+            if (!marked[neighbor]){
+                edgeTo[neighbor] = curr;
+                marked[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
     cout << endl;
 }
 
