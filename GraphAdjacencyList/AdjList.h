@@ -36,13 +36,47 @@ public:
     void Print();
     void AddVertex(int);
     void DeleteVertex(int);
-    void DFS();
+    void DFS(int);
     void BFS(int);
     void RecursiveDFS(int v);
     void MST();
     void PrintEdgeTo();
     void FindPath(int v, int w);
+    void FindConnectedComponents();
 };
+
+void AdjList::FindConnectedComponents(){
+    //Initializing the components array:
+    vector<int> components(vectorSize, -1);
+    //clear out the visited array and set size
+    //to number of vertices
+    visited.clear();
+    visited.resize(vectorSize);
+    int curr = 0;
+    while (true){
+        DFS(curr);
+        for (int i = 0; i < visited.size(); i++){
+            if (visited[i]){
+                //We've found the visited vertex for curr
+                components[i] = curr;
+            }
+        } // We've now marked all vertices reachable from curr
+        
+        curr = -1;
+        for (int i = 0; i < components.size(); i++){
+            if (components[i] == -1){
+                //We've found a vertex not yet part of a component
+                //Need to call DFS with this vertex
+                curr = i;
+                break;
+            }
+        }
+        
+        if (curr != -1){
+            DFS(curr);
+        }
+    }
+}
 
 void AdjList::FindPath(int v, int w){
     /**
@@ -200,13 +234,12 @@ void AdjList::MST(){
     }
 }
 
-void AdjList::DFS(){
+void AdjList::DFS(int curr){
     //Need an array to keep track of visited
     //nodes. All values will be initialized to 0
     vector<bool> visited(vectorSize);
 //    stack<int> elemStack;
     queue<int> elemStack;
-    int curr = 0;
     elemStack.push(curr);
     while (elemStack.size() != 0){
         if (!visited[curr]){

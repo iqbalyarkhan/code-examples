@@ -14,18 +14,19 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    AdjList l(6);
+    AdjList l(11);
     l.AddEdge(0, 2);
     l.AddEdge(0, 1);
-    l.AddEdge(0, 5);
-    l.AddEdge(1, 2);
-    l.AddEdge(2, 3);
-    l.AddEdge(2, 4);
-    l.AddEdge(3, 4);
-    l.AddEdge(3, 5);
+    l.AddEdge(0, 3);
+    l.AddEdge(4, 7);
+    l.AddEdge(5, 7);
+    l.AddEdge(5, 6);
+    l.AddEdge(6, 7);
+    l.AddEdge(8, 10);
+    l.AddEdge(9, 10);
     l.Print();
     cout << endl;
-    l.DFS();
+//    l.DFS();
 //    cout << "Recursive DFS" << endl;
 //    l.RecursiveDFS(0);
 //    cout << endl;
@@ -38,8 +39,8 @@ int main(int argc, const char * argv[]) {
 //    l.PrintEdgeTo();
 //    cout << "Find path: " << endl;
 //    l.FindPath(2, 5);
-    cout << endl;
-    l.FindPath(0,4);
+//    cout << endl;
+//    l.FindPath(0,4);
 //    AdjList l(8);
 //    l.AddEdge(0,1);
 //    l.AddEdge(0,2);
