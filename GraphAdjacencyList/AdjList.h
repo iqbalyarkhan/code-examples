@@ -57,25 +57,29 @@ void AdjList::FindConnectedComponents(){
         DFS(curr);
         for (int i = 0; i < visited.size(); i++){
             if (visited[i]){
-                //We've found the visited vertex for curr
                 components[i] = curr;
             }
-        } // We've now marked all vertices reachable from curr
+        }
         
         curr = -1;
         for (int i = 0; i < components.size(); i++){
-            if (components[i] == -1){
-                //We've found a vertex not yet part of a component
-                //Need to call DFS with this vertex
+            if(components[i] == -1){
                 curr = i;
                 break;
             }
         }
-        
-        if (curr != -1){
-            DFS(curr);
+        if (curr == -1){
+            break;
         }
+        
+        visited.clear();
+        visited.resize(vectorSize);
     }
+    cout << "Components array: " << endl;
+    for (auto j : components){
+        cout << j << " ";
+    }
+    cout << endl;
 }
 
 void AdjList::FindPath(int v, int w){
@@ -237,7 +241,7 @@ void AdjList::MST(){
 void AdjList::DFS(int curr){
     //Need an array to keep track of visited
     //nodes. All values will be initialized to 0
-    vector<bool> visited(vectorSize);
+//    vector<bool> visited(vectorSize);
 //    stack<int> elemStack;
     queue<int> elemStack;
     elemStack.push(curr);

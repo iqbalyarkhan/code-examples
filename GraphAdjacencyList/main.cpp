@@ -26,6 +26,7 @@ int main(int argc, const char * argv[]) {
     l.AddEdge(9, 10);
     l.Print();
     cout << endl;
+    l.FindConnectedComponents();
 //    l.DFS();
 //    cout << "Recursive DFS" << endl;
 //    l.RecursiveDFS(0);
