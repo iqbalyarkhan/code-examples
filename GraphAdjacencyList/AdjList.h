@@ -28,6 +28,7 @@ private:
     vector<bool> visited;
     vector<int> edgeTo;
     void initializeStructures();
+    int numberOfComponents;
     
 public:
     AdjList();
@@ -53,11 +54,13 @@ void AdjList::FindConnectedComponents(){
     visited.clear();
     visited.resize(vectorSize);
     int curr = 0;
+    int componentNumber = 0;
     while (true){
+        componentNumber++;
         DFS(curr);
         for (int i = 0; i < visited.size(); i++){
             if (visited[i]){
-                components[i] = curr;
+                components[i] = componentNumber;
             }
         }
         
@@ -194,6 +197,7 @@ void AdjList::initializeStructures(){
     adjList.resize(vectorSize);
     visited.resize(vectorSize);
     edgeTo.resize(vectorSize);
+    numberOfComponents = 0;
 }
 
 void AdjList::Print(){
