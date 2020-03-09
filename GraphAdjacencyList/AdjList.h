@@ -29,6 +29,7 @@ private:
     vector<int> edgeTo;
     void initializeStructures();
     int numberOfComponents;
+    bool hasCycle;
     
 public:
     AdjList();
@@ -44,7 +45,33 @@ public:
     void PrintEdgeTo();
     void FindPath(int v, int w);
     void FindConnectedComponents();
+    bool CyclePresent();
+    void CycleDFS(int,int);
 };
+
+bool AdjList::CyclePresent(){
+    //https://www.youtube.com/watch?v=eCG3T1m7rFY
+    //Does the graph have a cycle? https://www.youtube.com/watch?v=L0DcePeWHnM
+    CycleDFS(0, -1);
+    if (hasCycle)
+        cout << "There is a cycle!" << endl;
+    return hasCycle;
+}
+
+void AdjList::CycleDFS(int v, int parent){
+    cout << "v is: " << v << " and parent is: " << parent << endl;
+    visited[v] = true;
+    for (int i = 0; i < adjList[v].size(); i++){
+        int neighbor = adjList[v][i];
+        if (!visited[neighbor]){
+            CycleDFS(neighbor, v);
+        } else {
+            if (neighbor != parent){
+                hasCycle = true;
+            }
+        }
+    }
+}
 
 void AdjList::FindConnectedComponents(){
     //Initializing the components array:
