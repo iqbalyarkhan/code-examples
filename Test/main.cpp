@@ -12,46 +12,82 @@
 #include <string>
 #include <vector>
 #include "Test.h"
+#include <map>
+#include <unordered_map>
 
 int main(int argc, const char * argv[]) {
-    vector<int>* arr[3];
-    arr[0] = new vector<int>;
-    arr[1] = new vector<int>;
-    arr[2] = new vector<int>;
-    cout << "hello world!" << endl;
-    cout << "Yo yo honey singh!" << endl;
-    arr[0]->push_back(8);
-    arr[0]->push_back(8);
-    arr[0]->push_back(8);
-    arr[1]->push_back(9);
-    arr[1]->push_back(9);
-    arr[1]->push_back(9);
-    arr[2]->push_back(10);
-    arr[2]->push_back(10);
-    arr[2]->push_back(10);
+    unordered_map<string, int> m;
+    m["one"] = 1;
+    m["two"] = 2;
+    m["three"] = 3;
+    m["four"] = 4;
     
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            cout << arr[i]->at(j) << " ";
-        }
-        cout << endl;
+    if (m.find("four") != m.end()){
+        cout << m["four"] << endl;
+    } else{
+        cout << "not found" << endl;
     }
     
-    delete arr[1];
-    arr[1] = nullptr;
-    cout << "Bleh!" << endl;
-    
-    for (int i = 0; i < 3; i++){
-        if (arr[i] != nullptr){
-            for (int j = 0; j < arr[i]->size(); j++){
-                cout << arr[i]->at(j) << " ";
-            }
-            cout << endl;
-//            i++;
-        } else {
-//            i++;
-        }
+    for (auto i : m){
+        cout <<i.first << " -> " << i.second << endl;
     }
+    
+    
+//    map<string,int> m;
+//    m["one"] = 1;
+//    m["two"] = 2;
+//    m["three"] = 3;
+//    m["four"] = 4;
+//
+//    if (m.find("five") != m.end()){
+//        cout << "Found it! " << endl;
+//    } else {
+//        cout << "Couldn't find it" << endl;
+//    }
+//
+//    for (auto i: m){
+//        cout << "Key: " << i.first << " Value: " << i.second << endl;
+//    }
+    
+    
+//    vector<int>* arr[3];
+//    arr[0] = new vector<int>;
+//    arr[1] = new vector<int>;
+//    arr[2] = new vector<int>;
+//    cout << "hello world!" << endl;
+//    cout << "Yo yo honey singh!" << endl;
+//    arr[0]->push_back(8);
+//    arr[0]->push_back(8);
+//    arr[0]->push_back(8);
+//    arr[1]->push_back(9);
+//    arr[1]->push_back(9);
+//    arr[1]->push_back(9);
+//    arr[2]->push_back(10);
+//    arr[2]->push_back(10);
+//    arr[2]->push_back(10);
+//
+//    for (int i = 0; i < 3; i++){
+//        for (int j = 0; j < 3; j++){
+//            cout << arr[i]->at(j) << " ";
+//        }
+//        cout << endl;
+//    }
+//
+//    delete arr[1];
+//    arr[1] = nullptr;
+//    cout << "Bleh!" << endl;
+//
+//    for (int i = 0; i < 3; i++){
+//        if (arr[i] != nullptr){
+//            for (int j = 0; j < arr[i]->size(); j++){
+//                cout << arr[i]->at(j) << " ";
+//            }
+//            cout << endl;
+////            i++;
+//        } else {
+////            i++;
+//        }
+//    }
     
 //    int* arr;
 //    arr = new int[5];
