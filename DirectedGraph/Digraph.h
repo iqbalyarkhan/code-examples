@@ -33,10 +33,21 @@ public:
     void AddEdge(int,int);
     void Print();
     void BFS(int);
+    void RecursiveDFS();
     void RecursiveDFS(int v);
     void PrintEdgeTo();
     void FindPath(int v, int w);
 };
+
+void Digraph::RecursiveDFS(){
+    for (int i = 0; i < visited.size(); i++){
+        if (!visited[i]){
+            cout << endl;
+            cout << "New vertex: " << i << endl;
+            RecursiveDFS(i);
+        }
+    }
+}
 
 void Digraph::FindPath(int v, int w){
     /**

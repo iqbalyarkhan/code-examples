@@ -15,16 +15,14 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     Digraph l(6);
-    l.AddEdge(0,1);
-    l.AddEdge(0,2);
-    l.AddEdge(2,1);
     l.AddEdge(2,3);
-    l.AddEdge(2,4);
-    l.AddEdge(3,5);
+    l.AddEdge(3,1);
     l.AddEdge(4,0);
-    l.AddEdge(5,1);
+    l.AddEdge(4,1);
+    l.AddEdge(5,0);
+    l.AddEdge(5,2);
     l.Print();
-    l.RecursiveDFS(0);
+    l.RecursiveDFS();
     cout << endl;
     l.PrintEdgeTo();
     return 0;
