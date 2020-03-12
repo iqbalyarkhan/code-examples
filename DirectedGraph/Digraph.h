@@ -42,8 +42,6 @@ public:
 void Digraph::RecursiveDFS(){
     for (int i = 0; i < visited.size(); i++){
         if (!visited[i]){
-            cout << endl;
-            cout << "New vertex: " << i << endl;
             RecursiveDFS(i);
         }
     }

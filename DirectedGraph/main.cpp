@@ -14,13 +14,15 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    Digraph l(6);
-    l.AddEdge(2,3);
-    l.AddEdge(3,1);
-    l.AddEdge(4,0);
-    l.AddEdge(4,1);
-    l.AddEdge(5,0);
-    l.AddEdge(5,2);
+    Digraph l(8);
+    l.AddEdge(0,3);
+    l.AddEdge(0,4);
+    l.AddEdge(1,4);
+    l.AddEdge(2,5);
+    l.AddEdge(3,6);
+    l.AddEdge(4,6);
+    l.AddEdge(5,7);
+    l.AddEdge(6,7);
     l.Print();
     l.RecursiveDFS();
     cout << endl;
