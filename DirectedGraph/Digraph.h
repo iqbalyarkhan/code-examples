@@ -73,6 +73,21 @@ void Digraph::RecursiveDFS(){
     }
 }
 
+void Digraph::RecursiveDFS(int v){
+    visited[v] = true;
+//    cout << v << " ";
+    pre.push(v);
+    for (int i = 0; i < adjList[v].size(); i++){
+        int curr = adjList[v][i];
+        if (!visited[curr]){
+            edgeTo[curr] = v;
+            RecursiveDFS(curr);
+        }
+    }
+    post.push(v);
+    reversePost.push(v);
+}
+
 void Digraph::FindPath(int v, int w){
     /**
      Begin at the w vertex: 5 (push 5 on the stack)
