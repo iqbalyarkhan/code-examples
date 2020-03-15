@@ -26,7 +26,8 @@ int main(int argc, const char * argv[]) {
     l.Print();
     l.RecursiveDFS();
     cout << endl;
-    l.PrintEdgeTo();
+    l.PrintOrder();
+//    l.PrintEdgeTo();
     
     /**
          Digraph l(13);

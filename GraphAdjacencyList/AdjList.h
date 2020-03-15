@@ -40,6 +40,7 @@ public:
     void DeleteVertex(int);
     void DFS(int);
     void BFS(int);
+    void RecursiveDFS();
     void RecursiveDFS(int v);
     void MST();
     void PrintEdgeTo();
@@ -48,6 +49,15 @@ public:
     bool CyclePresent();
     void CycleDFS(int,int);
 };
+
+void AdjList::RecursiveDFS(){
+    for (int i = 0; i < visited.size(); i++){
+        if (!visited[i]){
+            RecursiveDFS(i);
+        }
+    }
+}
+
 
 bool AdjList::CyclePresent(){
     //https://www.youtube.com/watch?v=eCG3T1m7rFY

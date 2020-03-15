@@ -23,6 +23,10 @@ private:
     vector<vector<int>> adjList;
     vector<bool> visited;
     vector<int> edgeTo;
+    queue<int> pre;
+    queue<int> post;
+    stack<int> reversePost;
+    
     void initializeStructures();
     int numberOfComponents;
     bool hasCycle;
@@ -37,7 +41,29 @@ public:
     void RecursiveDFS(int v);
     void PrintEdgeTo();
     void FindPath(int v, int w);
+    void PrintOrder();
 };
+
+void Digraph::PrintOrder(){
+    cout << "Pre: " << endl;
+    while (!pre.empty()){
+        cout << pre.front() << " ";
+        pre.pop();
+    }
+    cout << endl;
+    cout << "Post: " << endl;
+    while (!post.empty()){
+        cout << post.front() << " ";
+        post.pop();
+    }
+    cout << endl;
+    cout << "Reverse Post: " << endl;
+    while (!reversePost.empty()){
+        cout << reversePost.top() << " ";
+        reversePost.pop();
+    }
+    cout << endl;
+}
 
 void Digraph::RecursiveDFS(){
     for (int i = 0; i < visited.size(); i++){
@@ -99,7 +125,8 @@ void Digraph::BFS(int v){
 
 void Digraph::RecursiveDFS(int v){
     visited[v] = true;
-    cout << v << " ";
+//    cout << v << " ";
+    pre.push(v);
     for (int i = 0; i < adjList[v].size(); i++){
         int curr = adjList[v][i];
         if (!visited[curr]){
@@ -107,6 +134,8 @@ void Digraph::RecursiveDFS(int v){
             RecursiveDFS(curr);
         }
     }
+    post.push(v);
+    reversePost.push(v);
 }
 
 void Digraph::PrintEdgeTo(){
