@@ -75,7 +75,6 @@ void Digraph::RecursiveDFS(){
 
 void Digraph::RecursiveDFS(int v){
     visited[v] = true;
-//    cout << v << " ";
     pre.push(v);
     for (int i = 0; i < adjList[v].size(); i++){
         int curr = adjList[v][i];
@@ -135,22 +134,6 @@ void Digraph::BFS(int v){
         }
     }
     cout << endl;
-}
-
-
-void Digraph::RecursiveDFS(int v){
-    visited[v] = true;
-//    cout << v << " ";
-    pre.push(v);
-    for (int i = 0; i < adjList[v].size(); i++){
-        int curr = adjList[v][i];
-        if (!visited[curr]){
-            edgeTo[curr] = v;
-            RecursiveDFS(curr);
-        }
-    }
-    post.push(v);
-    reversePost.push(v);
 }
 
 void Digraph::PrintEdgeTo(){
