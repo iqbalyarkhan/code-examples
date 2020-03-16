@@ -36,7 +36,10 @@ public:
 };
 
 void AdjList::IsBiPartite(){
-    DFSBiPartite(0);
+    for (int i = 0; i < vectorSize; i++){
+        if (!visited[i])
+            DFSBiPartite(0);
+    }
 }
 
 void AdjList::DFSBiPartite(int v){

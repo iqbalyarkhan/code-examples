@@ -62,7 +62,10 @@ void AdjList::RecursiveDFS(){
 bool AdjList::CyclePresent(){
     //https://www.youtube.com/watch?v=eCG3T1m7rFY
     //Does the graph have a cycle? https://www.youtube.com/watch?v=L0DcePeWHnM
-    CycleDFS(0, -1);
+    for (int i = 0; i < vectorSize; i++){
+        if (!visited[i])
+            CycleDFS(i, -1);
+    }
     if (hasCycle)
         cout << "There is a cycle!" << endl;
     return hasCycle;
