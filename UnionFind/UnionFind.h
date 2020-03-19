@@ -46,6 +46,18 @@ UF::UF(int num) : numberOfSites(num){
 void UF::Union(int child, int parent){
     int childRoot = FindRoot(child);
     int parentRoot = FindRoot(parent);
+    
+    //If the two don't already belong to the same component
+    if (childRoot != parentRoot){
+        if (children[childRoot] == children[parentRoot] || children[childRoot] < children[parentRoot]){
+            //Same number of children in both roots, make childRoot the child of parentRoot
+            Unionize(parentRoot, childRoot);
+        } else {
+            Unionize(childRoot, parentRoot);
+        }
+    } else {
+        cout << child << " and " << parent << " are part of the same component with root: " << childRoot << endl;
+    }
 }
 
 /// Function to find the root for the items being unioned
@@ -60,6 +72,17 @@ int UF::FindRoot(int r){
     return r;
 }
 
+void UF::Unionize(int parent, int child){
+    connectionsArray[child] = parent;
+    children[parent] += children[child] + 1;
+}
+
+void UF::PrintAllVectors(){
+    cout << "Connections Array: " << endl;
+    for (auto i : connectionsArray)
+        cout << i << " ";
+    cout << endl;
+}
 
 
 #endif /* UnionFind_h */

@@ -16,5 +16,17 @@ using namespace std;
 int main(int argc, const char * argv[]) {
     UF uf(12);
     uf.Union(4, 9);
+    uf.Union(1, 0);
+    uf.Union(5, 6);
+    uf.Union(5, 10);
+    uf.Union(4, 3);
+    uf.Union(3, 2);
+    uf.Union(7, 1);
+    uf.Union(4, 5);
+    uf.Union(5, 10);
+    uf.Union(11, 8);
+    uf.Union(11, 1);
+    uf.Union(11, 10);
+    uf.PrintAllVectors();
     return 0;
 }
