@@ -7,9 +7,14 @@
 //
 
 #include <iostream>
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include "UnionFind.h"
+using namespace std;
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    UF uf(12);
+    uf.Union(4, 9);
     return 0;
 }
