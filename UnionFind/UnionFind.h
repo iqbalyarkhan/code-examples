@@ -72,14 +72,22 @@ int UF::FindRoot(int r){
     return r;
 }
 
+/// Function to actually perform the union operation
+/// @param parent integer being designated as parent
+/// @param child integer being designated as child
 void UF::Unionize(int parent, int child){
     connectionsArray[child] = parent;
     children[parent] += children[child] + 1;
 }
 
+/// Function to print vectors
 void UF::PrintAllVectors(){
     cout << "Connections Array: " << endl;
     for (auto i : connectionsArray)
+        cout << i << " ";
+    cout << endl;
+    cout << "Children array: " << endl;
+    for (auto i : children)
         cout << i << " ";
     cout << endl;
 }
