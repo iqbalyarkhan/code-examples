@@ -7,9 +7,10 @@
 //
 
 #include <iostream>
+#include "MST.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    MST mst(10);
     return 0;
 }

@@ -13,7 +13,6 @@
 #include <string>
 #include <stdio.h>
 #include <vector>
-#include 
 
 using namespace std;
 
@@ -40,6 +39,18 @@ public:
     void Insert(int item);
     int GetMin();
     
+    //MST
+    MST(int v);
 };
+
+MST::MST(int v) : numberOfSites(v){
+    for (int i = 0; i < numberOfSites; i++)
+        connectionsArray.push_back(i);
+    children.resize(numberOfSites);
+    
+    for (int i = 0; i < numberOfSites; i++){
+        cout << connectionsArray[i] << " " << children[i] << endl;
+    }
+}
 
 #endif /* MST_h */
