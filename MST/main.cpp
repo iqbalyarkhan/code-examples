@@ -21,6 +21,6 @@ int main(int argc, const char * argv[]) {
     mst.Insert(4, 5, 6);
     mst.Insert(4, 6, 1);
     mst.Insert(5, 6, 1);
-    mst.Print();
+    mst.createMST();
     return 0;
 }

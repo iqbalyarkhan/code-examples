@@ -27,6 +27,7 @@ int main(int argc, const char * argv[]) {
     uf.Union(11, 8);
     uf.Union(11, 1);
     uf.Union(11, 10);
+    cout << "10's root is: " << uf.FindRoot(10) << " and 2's root is: " << uf.FindRoot(2) << endl;
     uf.PrintAllVectors();
     return 0;
 }
