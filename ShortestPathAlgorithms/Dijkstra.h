@@ -16,6 +16,7 @@
 #include <string>
 #include <utility>
 #include <limits>
+#include <stack>
 
 
 using namespace std;
@@ -42,9 +43,19 @@ private:
      */
     void AddToSortedEdges(int s, int weight);
     
-public:
+    /**
+     Method name: PrintAllSingleSourceShortestPaths
+     Description: Function to print all paths from source
+     */
+    void PrintAllSingleSourceShortestPaths();
     
-    void PrintDist();
+public:
+    /**
+       * Method name: PrintDPrintArraysist
+       * Description: Method to print the edge and dist arrays
+       * Parameters: None
+       */
+    void PrintArrays();
     
     /**
       * Method name: Digraph
@@ -83,7 +94,27 @@ public:
     
 };
 
-void Digraph::PrintDist(){
+void Digraph::PrintAllSingleSourceShortestPaths(){
+    for (int i = 0; i <= numberOfVertices - 1; i++){
+        cout << "Path from 0 to " << i << ": ";
+        int curr = i;
+        stack<int> s;
+        s.push(curr);
+        while (curr != 0){
+            curr = edge[curr];
+            s.push(curr);
+        }
+        while (!s.empty()){
+            cout << s.top() << " ";
+            s.pop();
+        }
+        cout << " has weight: " << dist[i];
+        cout << endl;
+        
+    }
+}
+
+void Digraph::PrintArrays(){
     cout << "Index" << " " << "dist[]" << " " << "edge[]" << endl;
     for (int i = 0; i < dist.size(); i++){
         cout << i << " " << dist[i] << " " <<edge[i]<< endl;
@@ -111,18 +142,23 @@ void Digraph::SPADijkstra(int s){
         sortedEdges.erase(sortedEdges.begin());
         Relax(s);
     }
+    PrintAllSingleSourceShortestPaths();
 }
 
 void Digraph::Relax(int s){
+    //Get all adjacent vertices to passed in vertex
     for (int i = 0; i < adjList[s].size(); i++){
+        //w is the adjacent vertex
         int w = adjList[s][i].first;
+        //weight is the weight of that edge
         int weight = adjList[s][i].second + dist[s];
+        //If this weight is less than what dist stores
         if (dist[w] > weight){
+            //update the weights for that edge and the edge array
             dist[w] = weight;
             edge[w] = s;
-            
+            //Next update the edge weights in the sortedEdges array
             bool found = false;
-            
             for (int i = 0; i < sortedEdges.size(); i++){
                 if (sortedEdges[i].second == w){
                     sortedEdges[i].first = weight;
@@ -139,13 +175,8 @@ void Digraph::Relax(int s){
     }
 }
 
-/// Function to insert an edge to our adjacency list
-/// @param from edge from
-/// @param to edge to
-/// @param weight the weight of the edge
-/// @example 0,2, 0.26 : 0-->2 has weight 0.26, so add 2,0.26 to 0's adj list
 void Digraph::Insert(int from, int to, int weight){
-    //Create two pairs, one for each vertex.
+    //Create pair for vertex.
     pair<int,double> edge(to, weight);
     //Push the edge on from's adjacency list
     adjList[from].push_back(edge);

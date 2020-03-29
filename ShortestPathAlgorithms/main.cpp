@@ -25,6 +25,6 @@ int main(int argc, const char * argv[]) {
     dg.Insert(4, 5, 5);
     dg.Print();
     dg.SPADijkstra(0);
-    dg.PrintDist();
+    dg.PrintArrays();
     return 0;
 }
