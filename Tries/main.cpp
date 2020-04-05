@@ -14,7 +14,8 @@ int main(int argc, const char * argv[]) {
     Trie t(26);
     t.Put("she", 40);
     t.Put("shell", 20);
-    t.Collect();
+    t.Find("share");
+    t.Find("she");
 //    char a = 'a';
 //    int ia = int('z') - 97;
 //    cout << ia << endl;

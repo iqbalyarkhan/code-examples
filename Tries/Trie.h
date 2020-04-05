@@ -27,13 +27,12 @@ private:
     };
     Node* root;
     int alphabetSize;
-    void Collect(Node*);
     
 public:
     Trie(int);
     void Put(string,int);
     void Print();
-    void Collect();
+    void Find(string);
 };
 
 Trie::Trie(int s) : alphabetSize(s){
@@ -62,13 +61,19 @@ void Trie::Put(string key, int val){
     curr->value = val;
 }
 
-void Trie::Collect(){
+void Trie::Find(string key){
     Node* curr = root;
-    Collect(curr);
+    for (int i = 0; i < key.size(); i++){
+        int index = int(key[i]) - 97;
+        if (curr->links[index] == nullptr){
+            cout << key << " not in trie " << endl;
+            return;
+        }
+        curr = curr->links[index];
+    }
+    
+    cout << key << " in trie with value: " << curr->value << endl;
 }
 
-//void Trie::Collect(Node* curr){
-//    for (int i = 0; i < curr->inde)
-//}
 
 #endif /* Trie_h */
