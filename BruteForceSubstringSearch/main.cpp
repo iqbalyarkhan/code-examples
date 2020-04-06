@@ -21,11 +21,11 @@ int main(int argc, const char * argv[]) {
             index = i;
             int j = 0;
             for (; j < pattern.size(); j++){
-                if (text[i] != pattern[j]){
+                if (text[index] != pattern[j]){
                     found = false;
                     break;
                 } else {
-                    i++;
+                    index++;
                 }
             }
             if (found){
