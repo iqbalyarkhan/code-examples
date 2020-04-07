@@ -15,44 +15,58 @@
 using namespace std;
 
 class RK{
+private:
+    long patHash;
+    long RM;
+    int Radix = 256;
+    long prime = 997;
+
+    void setRM(int);
+    
 public:
     long HashFunction(string key, int m);
-    int GetIndex(string,string);
+    void PrintIndex(string,string);
     
 };
 
-int RK::GetIndex(string text, string pat){
-    long patternHash = HashFunction(pat, int(pat.size()));
-    
-    //Iterating over text to grab substrings that're equal
-    //in length to the pattern string.
-    int index = -1;
-    for (int i = 0; i < text.size(); i++){
-        string curr = string();
-        int end = i + int(pat.size());
-        if (end <= text.size()){
-            int j = i;
-            while (j < end){
-                curr+= text[j];
-                j++;
-            }
-            long textHash = HashFunction(curr, int(pat.size()));
-            if (textHash == patternHash){
-                index = i;
-                return index;
-            }
-        }
+
+void RK::setRM(int m){
+    RM = 1;
+    for (int i = 0; i < m; i++){
+        RM = (Radix * RM) % prime;
+    }
+}
+
+void RK::PrintIndex(string text, string pat){
+    //Setting RM
+    setRM(int(pat.size()));
+    int m = int(pat.size());
+    int n = int(text.size());
+    long patHash = HashFunction(pat, m);
+    string txt = string();
+    for (int i = 0; i < m; i++){
+        txt += text[i];
+    }
+    long textHash = HashFunction(txt, m);
+    if (textHash == patHash)
+        cout << "Found a match at index 0!" << endl;
+    for (int i = m; i < n; i++){
+        char c = text[i];
+        char cNext = text[i + 1];
+        int cInt = int(c);
+        textHash = ((textHash - RM*cInt) * (Radix % prime) +
     }
     
-    return index;
+    
 }
+
 
 long RK::HashFunction(string key, int m){
     long h = 1;
     for (int i = 0; i < m; i++){
         char c = key[i];
         int key = int(c);
-        h = (26 * h + key) % 997;
+        h = (Radix * h + key) % prime;
     }
     
     return h;
