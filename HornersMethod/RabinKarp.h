@@ -54,9 +54,8 @@ void RK::PrintIndex(string text, string pat){
         char c = text[i];
         char cNext = text[i + 1];
         int cInt = int(c);
-        textHash = ((textHash - RM*cInt) * (Radix % prime) +
+        textHash = ((textHash - RM*cInt) * (Radix % prime));//incorrect
     }
-    
     
 }
 
