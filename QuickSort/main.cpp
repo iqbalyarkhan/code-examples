@@ -18,55 +18,32 @@ using namespace std;
 int partition(vector<int>&, int lo, int hi);
 void quickSort(vector<int>&, int,int);
 
+int medianOfThree(vector<int>&,int i, int j);
+
 int main(int argc, const char * argv[]) {
-    
-//    vector<int> A = {7,5,3,2,1,6,4,8};
-    vector<int> A = {1,2,3,4,5,6,7,8};
-    
-//    for (auto i : A)
-//        cout << i << " ";
-//    cout << endl;
-    int ans = partition(A,0,7);
-    cout << "ans is: " << ans << endl;
-//    quickSort(A, 0,7);
-//    for (auto i : A)
-//        cout << i << " ";
-//    cout << endl;
-//    cout << "ans: " << partition(A,1,7) << endl;
-//    cout << "AND FINALLY: " << endl;
+    vector<int> A = {9,13,4,21,2,11};
+//    cout << "ans: " << ans << endl;
+    quickSort(A, 0,int(A.size() - 1));
     for(auto i : A)
         cout << i << " ";
-//    return 0;
+
 }
 
 void quickSort(vector<int>& A, int lo, int hi){
     if (hi <= lo)
         return;
     int p = partition(A, lo,hi);
-    quickSort(A, lo,p-1);
+    quickSort(A, lo, p-1);
     quickSort(A, p+1,hi);
 }
 
 int partition(vector<int>& A, int i, int j){
-    cout << "Arr recieved: " << endl;
-    for (auto i : A)
-        cout << i << " ";
-    cout << endl;
-    int m = i + (j-i)/2;
-    int pivot = -1;
-    cout << A[i] << " " << A[j] << " " << A[m] << endl;
-    if (A[i] > A[m] && A[i] > A[j])
-        pivot = A[m] < A[j] ? j : m;
-    else if (A[j] > A[m] && A[j] > A[i])
-        pivot = A[m] < A[i] ? i : m;
-    else
-        pivot = A[j] < A[i] ? i : j;
-    cout << "Pivot index: " << pivot << endl;
-    cout << "Pivot chosen: " << A[pivot] << endl;
+    //Median of three pivot calculation
+    int pivot = medianOfThree(A, i, j);
     int temp = A[i];
     A[i] = A[pivot];
     A[pivot] = temp;
-    pivot = 0;
+    pivot = i;
     i++;
     
     while (true){
@@ -89,6 +66,18 @@ int partition(vector<int>& A, int i, int j){
         i++;
         j--;
     }
-    
     return j;
+}
+
+//Function to calculate median of three
+int medianOfThree(vector<int>& A,int i, int j){
+    int m = i + (j-i)/2;
+    int pivot = -1;
+    if (A[i] > A[m] && A[i] > A[j])
+        pivot = A[m] < A[j] ? j : m;
+    else if (A[j] > A[m] && A[j] > A[i])
+        pivot = A[m] < A[i] ? i : m;
+    else
+        pivot = A[j] < A[i] ? i : j;
+    return pivot;
 }
