@@ -54,11 +54,12 @@ int main(int argc, const char * argv[]) {
 //        cout << "a is false!" << endl;
 //    }
 //
-//    bitset<8> temp('a');
-//    cout << temp << endl;
-    
-    getParity(21);
-    BKAlgo(21);
+    bitset<8> temp('a');
+    cout << temp << endl;
+    cout << "01100001" << endl;
+//    cout << (24 & 0XF) << endl;
+//    getParity(21);
+//    BKAlgo(21);
     
     return 0;
 }
