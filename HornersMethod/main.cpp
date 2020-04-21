@@ -30,21 +30,65 @@ using namespace std;
  
  */
 
-int main(int argc, const char * argv[]) {
-    
-    string test = "othersidehellofromthe";
-    string pat = "hello";
-    long RM = 1;
-    int M = 5;
-    for (int i = 0; i < M; i++){
-        RM = RM * 256;
+// d is the number of characters in the input alphabet
+#define Radix 256
+
+void search(string txt, string pat)
+{
+    int M = int(pat.size());
+    int N = int(txt.size());
+    int i = 0;
+    int pHash = 0; // hash value for pattern
+    int tHash = 0; // hash value for txt
+    int Q = 1;
+    int prime = 997;
+
+    // The value of h would be "pow(d, M-1)%q"
+    for (i = 0; i < M - 1; i++)
+        Q = (Q * Radix) % prime;
+
+    // Calculate the hash value of pattern and first
+    // window of text
+    for (i = 0; i < M; i++)
+    {
+        pHash = (Radix * pHash + pat[i]) % prime;
+        tHash = (Radix * tHash + txt[i]) % prime;
     }
+
+    // Slide the pattern over text one by one
+    for (i = 0; i <= N - M; i++)
+    {
+
+        // Check the hash values of current window of text
+        // and pattern. If the hash values match then only
+        // check for characters on by one
+        if ( pHash == tHash )
+        {
+            cout<<"Pattern found at index "<< i<<endl;
+        }
+
+        // Calculate hash value for next window of text: Remove
+        // leading digit, add trailing digit
+        if ( i < N-M )
+        {
+            tHash = (Radix*(tHash - txt[i]*Q) + txt[i+M])%prime;
+
+            // We might get negative value of t, converting it
+            // to positive
+            if (tHash < 0){
+                tHash = (tHash + prime);
+            }
+        }
+    }
+}
+
+
+int main(int argc, const char * argv[]) {
+//
+//    string test = "othersidehellofromthe";
+//    string pat = "hello";
     
-    
-    
-//    RK rk;
-//    cout << rk.GetIndex("hellofromtheothersidestr", "side") << endl;
-//    cout << rk.HashFunction("hello", 5) << endl;
+    search("hellofromtheotherstrside", "side");
     return 0;
 }
 
