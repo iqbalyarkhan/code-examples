@@ -40,10 +40,9 @@ void search(string txt, string pat)
     int i = 0;
     int pHash = 0; // hash value for pattern
     int tHash = 0; // hash value for txt
-    int Q = 1;
+    int Q = 1;//Radix^(M-1)
     int prime = 997;
 
-    // The value of h would be "pow(d, M-1)%q"
     for (i = 0; i < M - 1; i++)
         Q = (Q * Radix) % prime;
 
